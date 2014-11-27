@@ -1,0 +1,34 @@
+.d1.user-cards
+  - @users.each do |user|
+    .user-card.vcard{:id => "designer-#{user.id}"}
+      .inner
+        -#
+          .dp
+            %a{ :href => user.twitter_profile_url,
+                :title => "#{user.name} on Twitter",
+                :target => "_blank" }
+              %img.photo{:src => user.image_url}
+        .r
+          %h3.name
+            %a.url{ :href => user.twitter_profile_url,
+                :title => "#{user.name} on Twitter",
+                :target => "_blank" }
+              %span.fn= user.name
+
+          %p.minor<
+            %a.url{ :href => user.company_absolute_url,
+                :title => "Company Website",
+                :target => "_blank" }
+              %span.org= user.company
+            - if (not @city) && (user.city)
+              = " · "
+              %span.adr
+                %a{ :href => city_path(user.city.slug),
+                    :title => "Designers in #{user.city.name}" }
+                  %span.locality= user.city.name
+
+            - if current_user && current_user.is_admin?
+              = " · "
+              = link_to "Portfolio", user.absolute_url, :title => 'Portfolio'
+              = " · "
+              = link_to "Edit", edit_user_path(user.id)

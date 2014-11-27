@@ -1,0 +1,518 @@
+@import "compass/typography/vertical_rhythm";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3";
+
+@import "normalize";
+@import "fonticons";
+@import "mixins";
+@import "keyframes";
+
+$base-font-size: 24px;
+$base-line-height: 32px;
+@include establish-baseline();
+// http://modularscale.com/scale/?px1=24&px2=32&ra1=1.333&ra2=0
+
+$color-base: #595643;
+$color-base-light: lighten($color-base, 25%);
+$color-base-lighter: lighten($color-base, 55%);
+$color-link: #ED834E;
+$color-link-hover: darken(#ED834E, 15%);
+$color-border: $color-base-lighter;
+$color-background: lighten(#EBE1C5, 11%);
+$color-background-success: #88d07e;
+
+$color-notification-background: darken($color-background, 10%);
+$color-notification-background-error: $color-link-hover;
+
+$color-error: $color-link-hover;
+$border-radius-base: 3px;
+
+@import "grid";
+
+@mixin font-weight-light {
+  font-weight: 300;
+}
+@mixin font-weight-regular {
+  font-weight: 400;
+}
+@mixin font-weight-semibold {
+  font-weight: 600;
+}
+
+body {
+  background: $color-background;
+  color: $color-base;
+  font-family: "chaparral-pro", Times, "Times New Roman", serif;
+  @include font-weight-light;
+
+  @include breakpoint(mobile) {
+    @include adjust-font-size-to(21px);
+  }
+}
+
+h1 {
+  @include font-weight-regular;
+  @include leader(1/2);
+  @include adjust-font-size-to(43px);
+
+  @include breakpoint(mobile) {
+    @include adjust-font-size-to(31px, 1);
+  }
+
+  @include breakpoint(tablet) {
+    @include trailer(1/3);
+  }
+
+  .site-title {
+    .char2 {
+      margin-left: -0.04651154125636em;
+    }
+  }
+}
+
+h2, h3 {
+  @include font-weight-regular;
+}
+
+sup, sub {
+  position: relative;
+  top: -0.6em;
+  vertical-align: baseline;
+}
+
+a {
+  @include transition((all 0.3s ease-out));
+  color: $color-link;
+  text-decoration: none;
+}
+a:hover, a:focus {
+  color: $color-link-hover;
+}
+a, a:focus {
+  outline: 0;
+}
+
+p {
+  @include leader(1);
+  @include trailer(1);
+}
+.minor {
+  @include adjust-font-size-to(18px);
+}
+
+input {
+  color: $color-base;
+}
+
+@include keyframes(bounceInDown) {
+  0% {
+    opacity: 0;
+    @include transform(translateY(-2000px));
+  }
+
+  60% {
+    opacity: 1;
+    @include transform(translateY(0px));
+  }
+  65% {
+    @include transform(translateY(2px) scaleY(0.8));
+  }
+
+  80% {
+    @include transform(translateY(-20px) scaleY(1.2));
+  }
+
+  95% {
+    @include transform(translateY(2px) scaleY(0.8));
+  }
+
+  100% {
+    @include transform(translateY(0) scaleY(1));
+  }
+}
+
+.header {
+  @include breakpoint(mobile) {
+    @include trailer();
+  }
+  @include breakpoint(desktop) {
+    @include padding-leader();
+  }
+
+  .change-city > a {
+    .icon-location {
+      @include adjust-font-size-to(14px);
+    }
+  }
+}
+
+.wf-active {
+  .home {
+    .header {
+      .change-city > a {
+        display: inline-block;
+      }
+      .icon-location {
+        display: inline-block;
+        -webkit-animation: bounceInDown 0.7s ease-out;
+           -moz-animation: bounceInDown 0.7s ease-out;
+             -o-animation: bounceInDown 0.7s ease-out;
+                animation: bounceInDown 0.7s ease-out;
+      }
+    }
+  }
+}
+
+.tagline {
+  margin-bottom: 0;
+
+  @include breakpoint(mobile) {
+    margin-top: 0;
+    margin-right: 30%;
+  }
+}
+
+.sidebar {
+  @include padding-leader();
+  @include padding-trailer();
+
+  .sidebar--heading {
+    @include adjust-font-size-to(18px);
+    @include margin-leader(0);
+    @include margin-trailer(1/2);
+  }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-menu {
+  @include box-shadow(0 3px 0 rgba(0, 0, 0, 0.05));
+  display: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background: $color-background;
+  list-style: none;
+
+  @include breakpoint(tablet) {
+    position: absolute;
+    top: 90%;
+    z-index: 1000;
+    float: left;
+    margin: 0;
+    padding: 6px 0;
+    min-width: 150px;
+    border: 1px solid $color-border;
+    @include border-radius($border-radius-base);
+
+    &::before {
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      display: inline-block;
+      margin-left: -7px;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid #ccc;
+      border-bottom-color: rgba(0, 0, 0, 0.2);
+      border-left: 7px solid transparent;
+      content: '';
+    }
+
+    &::after {
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      display: inline-block;
+      margin-left: -6px;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid $color-background;
+      border-left: 6px solid transparent;
+      content: '';
+    }
+  }
+
+  .divider {
+    overflow: hidden;
+    margin: 3px 1px;
+    height: 1px;
+    border-bottom: 1px solid $color-background;
+    background-color: $color-border;
+  }
+
+  a {
+    display: block;
+    padding: 0 9px;
+    color: $color-base;
+
+    @include breakpoint(mobile) {
+      @include adjust-font-size-to(21px);
+      padding: 6px 5%;
+    }
+
+    @include breakpoint(tablet) {
+      @include adjust-font-size-to(12px, 2/3);
+    }
+  }
+
+  a:hover {
+    @include breakpoint(tablet) {
+      background: $color-link;
+      color: $color-background;
+    }
+  }
+}
+
+.open .dropdown-menu {
+  display: block;
+}
+
+@include breakpoint(desktop) {
+  .user-cards {
+    min-height: 14*$base-rhythm-unit;
+  }
+}
+
+.user-card {
+  @include box-sizing(border-box);
+
+  .inner {
+    @include padding-leader(1);
+    @include padding-trailer(1);
+
+    @include breakpoint(mobile) {
+      @include padding-leader(1/2);
+      @include padding-trailer(1/2);
+    }
+  }
+
+  a {
+    color: $color-base;
+  }
+  a:hover {
+    color: $color-link-hover;
+  }
+
+  .dp {
+    @include border-radius(35px);
+    float: left;
+    width: 63px;
+    height: 63px;
+
+    img {
+      @include border-radius(32px);
+      width: 63px;
+      height: 63px;
+    }
+    a {
+      display: block;
+      img {
+        @include transition((box-shadow 0.3s ease-out));
+      }
+    }
+    a:hover {
+      img {
+        @include box-shadow(0 0 0 4px $color-link);
+      }
+    }
+
+    @include breakpoint(mobile) {
+      padding-top: 12px;
+      width: 36px;
+      height: 36px;
+
+      img {
+        @include border-radius(18px);
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+
+  // .r {
+  //   margin-left: 64px + $base-line-height/2;
+  //   @include breakpoint(mobile) {
+  //     margin-left: 37px + $base-line-height/2;
+  //   }
+  // }
+
+  .name {
+    @include leader(0);
+    font-weight: 300;
+    @include trailer(0);
+  }
+  .minor {
+    @include leader(0);
+    @include trailer(0);
+    color: $color-base-light;
+  }
+
+  &:before {
+    display: block;
+    margin-left: 0;
+    width: 7px;
+    border-top: 1px solid $color-border; //&:last-child:after
+    content: " ";
+  }
+    @include pie-clearfix();
+}
+
+.button {
+  @include border-radius(24px);
+  padding: 2px 12px 0px;
+  background: $color-link;
+  color: $color-background;
+
+  @include breakpoint(desktop) {
+    padding-top: 4px;
+  }
+
+  .icon-twitter:before {
+    font-size: 0.8em;
+  }
+}
+.button:hover {
+  background: $color-link-hover;
+  color: $color-background;
+}
+.button:active, .button:focus {
+  color: darken($color-background, 15%);
+}
+input.button {
+  border: 0;
+}
+
+.info-bubble {
+  color: $color-base;
+  text-decoration: none;
+}
+
+.footer-major, .footer-minor {
+  border-top: 1px solid $color-border;
+}
+.footer-major {
+  .minor {
+    @include leader(3);
+  }
+}
+.footer-minor {
+  text-align: center;
+
+  .logo {
+    @include leader(1);
+    display: block;
+    color: $color-base-lighter;
+
+    .icon-logo {
+      font-size: 3.125em;
+      line-height: 0.71641791;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: $color-base-light;
+    }
+  }
+}
+
+// Form
+input[type="text"] {
+  @include box-shadow(0);
+  padding: 2px 6px;
+  border: 1px solid $color-border;
+  background: lighten($color-background, 15%);
+}
+input[readonly="readonly"],
+input[readonly] {
+  color: lighten($color-base, 15%);
+  background: darken($color-background, 1%)
+}
+.form {
+  @include trailer(3);
+
+  .control-group {
+    @include trailer(1);
+
+    p {
+      display: block;
+      @include leader(1/3);
+      @include trailer(0);
+      @include adjust-font-size-to(18px);
+      color: $color-base-light;
+      @include breakpoint(tablet) {
+        width: 60%;
+      }
+    }
+  }
+  .controls {
+    input[type="text"] {
+      @include box-sizing(border-box);
+      width: 100%;
+      @include breakpoint(tablet) {
+        width: 60%;
+      }
+    }
+  }
+  label {
+    @include adjust-font-size-to(18px);
+  }
+
+  .error-text {
+    @include font-weight-regular;
+    @include leader(1/3);
+    @include adjust-font-size-to(18px);
+    color: $color-error;
+  }
+  .error-summary {
+    @include rhythm_borders(0px, 1/3);
+    @include trailer();
+    @include border-radius($border-radius-base);
+    color: $color-background;
+    background: $color-notification-background-error;
+  }
+}
+
+// Notification
+.notification {
+  @include box-shadow(0 3px 0 rgba(0, 0, 0, 0.02));
+  margin-bottom: 2px;
+  background-color: $color-notification-background;
+}
+.notification.success {
+  background-color: $color-background-success;
+  color: $color-background;
+  a {
+    color: $color-background;
+  }
+}
+.notification.error {
+  background-color: $color-notification-background-error;
+  color: $color-background;
+  a {
+    color: $color-background;
+  }
+}
+.notificaion-inner {
+  position: relative;
+  padding: 0.25em 16px;
+
+  p {
+    @include adjust-font-size-to(18px);
+    @include leader(0);
+    @include trailer(0);
+  }
+
+  .dismiss {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: block;
+    margin-top: -11px;
+    width: 20px;
+    height: 22px;
+    font-size: 36px;
+    line-height: 20px;
+  }
+}
